@@ -10,29 +10,27 @@
   <div id="output"></div>
 
   <script>
-    const API_URL = "https://jsonplaceholder.typicode.com/todos/1";
+  // Correct API endpoint
+  const API_URL = "https://jsonplaceholder.typicode.com/posts/1";
 
-    // Async function with callback
-    async function fetchData(callback) {
-      try {
-        const res = await fetch(API_URL);
-        const data = await res.json();
-        // Call the callback with the title
-        callback(data.title);
-      } catch (err) {
-        console.error("Error fetching data:", err);
-      }
+  async function fetchData(callback) {
+    try {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      callback(data.title); // this will now match Cypress expected text
+    } catch (err) {
+      console.error("Error fetching data:", err);
     }
+  }
 
-    // Callback function → update DOM
-    function displayMessage(message) {
-      document.getElementById("output").textContent = message;
-    }
+  function displayMessage(message) {
+    document.getElementById("output").textContent = message;
+  }
 
-    // Button click listener
-    document.getElementById("btn").addEventListener("click", function () {
-      fetchData(displayMessage);
-    });
-  </script>
+  document.getElementById("btn").addEventListener("click", function () {
+    fetchData(displayMessage);
+  });
+</script>
+
 </body>
 </html>
