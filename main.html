@@ -1,15 +1,38 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Async Function with Callback</title>
+</head>
+<body>
+  <button id="btn">Fetch Data</button>
+  <div id="output"></div>
 
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+  <script>
+    const API_URL = "https://jsonplaceholder.typicode.com/todos/1";
 
-  <body>
-    <!-- the entire body must be written by student -->
-    <button id="btn">Fetch</button>
-    <div id="output"></div>
+    // Async function with callback
+    async function fetchData(callback) {
+      try {
+        const res = await fetch(API_URL);
+        const data = await res.json();
+        // Call the callback with the title
+        callback(data.title);
+      } catch (err) {
+        console.error("Error fetching data:", err);
+      }
+    }
 
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+    // Callback function → update DOM
+    function displayMessage(message) {
+      document.getElementById("output").textContent = message;
+    }
+
+    // Button click listener
+    document.getElementById("btn").addEventListener("click", function () {
+      fetchData(displayMessage);
+    });
+  </script>
+</body>
 </html>
